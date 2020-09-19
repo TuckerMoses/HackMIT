@@ -26,6 +26,7 @@ app.use(cors());
 app.use('/api/users', userRouter);
 app.use('/api/annotatedpages', annotatedPagesRouter);
 app.use('/api/library', libraryRouter);
+app.use('/api/links', linkRouter);
 
 // Serving static files
 if (process.env.NODE_ENV === 'production') {
