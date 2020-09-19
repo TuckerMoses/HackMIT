@@ -5,10 +5,15 @@ import auth from '../api/auth';
 import { fetchMe } from '../api/userApi';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
 
 const ContentContainer = styled.div`
   text-align: center;
-  margin: 5%;
+  margin: 5% 0;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
 `;
 
 interface APIResponse {
@@ -63,16 +68,19 @@ const Dashboard = () => {
   };
 
   return (
-    <ContentContainer>
-      {isLoading && <div>Loading...</div>}
-      {myProfile && MyProfile(myProfile)}
-      <button
-        className="button is-primary"
-        onClick={() => history.push('/user')}
-      >
-        Go to User
-      </button>
-    </ContentContainer>
+    <FlexContainer>
+      <Sidebar />
+      <ContentContainer>
+        {isLoading && <div>Loading...</div>}
+        {myProfile && MyProfile(myProfile)}
+        <button
+          className="button is-primary"
+          onClick={() => history.push('/user')}
+        >
+          Go to User
+        </button>
+      </ContentContainer>
+    </FlexContainer>
   );
 };
 
