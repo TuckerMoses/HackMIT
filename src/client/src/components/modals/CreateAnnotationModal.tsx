@@ -1,6 +1,44 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Field, FieldAttributes, Form, Formik } from 'formik';
+
+interface AnnotateParams {
+  link: string;
+}
+
+const initialValues = {
+  link: '',
+};
+
+const Button = styled.button`
+  width: 30%;
+`;
+
+const FieldWrapper = ({
+  children,
+  icon,
+}: {
+  children: FieldAttributes<any>;
+  icon?: string;
+}) => {
+  if (!icon) return children;
+
+  return (
+    <div className="field">
+      <p className="control has-icons-left has-icons-right">
+        {children}
+        <span className="icon is-small is-left">
+          <i className={`fas ${icon}`}></i>
+        </span>
+      </p>
+    </div>
+  );
+};
 
 const CreateAnnotationModal: React.FC<any> = (props) => {
+  const handleSubmit = (values: AnnotateParams) => {
+    console.log('populate metadata');
+  };
   return (
     <>
       {props.show && (
@@ -18,7 +56,28 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
               ></button>
             </header>
             <section className="modal-card-body">
-              <h1>Hi</h1>
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form>
+                  <FieldWrapper icon="fa-link">
+                    <Field
+                      name="link"
+                      className="input"
+                      type="link"
+                      placeholder="https://hackmit.org/"
+                    />
+                  </FieldWrapper>
+                  <Button
+                    className="button is-primary is-light is-outlined"
+                    onClick={() => console.log('call API')}
+                    type="submit"
+                  >
+                    <span className="icon">
+                      <i className="fas fa-file-import"></i>
+                    </span>
+                    <span>Fetch content</span>
+                  </Button>
+                </Form>
+              </Formik>
             </section>
             <footer className="modal-card-foot">
               <button
