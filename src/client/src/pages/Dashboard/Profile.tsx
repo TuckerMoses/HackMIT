@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 
-import { MdHelpOutline, MdLockOpen, MdShare } from 'react-icons/md';
+import Tooltip from '@material-ui/core/Tooltip';
+import {
+  MdHelpOutline,
+  MdLockOpen,
+  MdLockOutline,
+  MdShare,
+} from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
 import { RiFolderAddLine } from 'react-icons/ri';
 
@@ -93,17 +99,54 @@ const ShelfItemContainer = styled.div`
   margin: 0 10px 20px 10px;
 `;
 
+const Button = styled.button`
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const Profile = () => {
-  let history = useHistory();
+  const [privateProfile, setPrivateProfile] = useState(true);
 
   return (
     <FlexContainer>
       <Sidebar />
       <ContentContainer>
         <OptionsContainer>
-          <MdLockOpen size={25} />
-          <MdShare size={25} />
-          <MdHelpOutline size={25} />
+          <Tooltip title="Toggle privacy" placement="bottom">
+            <Button onClick={() => setPrivateProfile(!privateProfile)}>
+              {privateProfile ? (
+                <MdLockOutline size={25} color="darkred" />
+              ) : (
+                <MdLockOpen size={25} color="green" />
+              )}
+            </Button>
+          </Tooltip>
+          <Tooltip title="Share profile" placement="bottom">
+            <Button
+              onClick={() =>
+                navigator.clipboard
+                  .writeText('https://hackmit.org/')
+                  .then(() =>
+                    alert('Shareable profile link copied to clipboard 🚀')
+                  )
+              }
+            >
+              <MdShare size={25} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="More Info" placement="bottom">
+            <Button onClick={() => console.log('Add help modal')}>
+              <MdHelpOutline size={25} />
+            </Button>
+          </Tooltip>
         </OptionsContainer>
         <AvatarContainer>
           <AvatarImgContainer>
