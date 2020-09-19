@@ -20,7 +20,7 @@ const AppRouter = () => {
           <PublicRoute exact path="/signup" component={Signup} />
           <PublicRoute exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/user" component={User} />
+          <PrivateRoute exact path="/profile" component={User} />
           <PublicRoute exact={false} path="/" component={Main} />
         </Switch>
       </AppContainer>

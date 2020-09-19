@@ -62,7 +62,7 @@ interface SidebarOptions {
 const options: SidebarOptions[] = [
   {
     title: 'Home',
-    path: '/home',
+    path: '/dashboard',
     icon: <MdHome size={25} />,
   },
   {

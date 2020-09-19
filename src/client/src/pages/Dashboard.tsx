@@ -75,7 +75,7 @@ const Dashboard = () => {
         {myProfile && MyProfile(myProfile)}
         <button
           className="button is-primary"
-          onClick={() => history.push('/user')}
+          onClick={() => history.push('/profile')}
         >
           Go to User
         </button>
