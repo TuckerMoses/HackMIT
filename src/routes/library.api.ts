@@ -30,4 +30,19 @@ router.put('/update', async(req, res) => {
     })
 });
 
+router.get('/get', async(req, res) => {
+    const {_id} = req.query;
+    return Library.findById(_id, (err, library) => {
+        if(err) return err;
+        return res.status(200).json({success: true, library: library});
+    });
+});
+
+router.delete('/delete', async(req, res) => {
+   const {_id} = req.query;
+   return Library.findByIdAndDelete(_id)
+       .then(() => res.status(200).json({ success: true }))
+       .catch((e) => errorHandler(res, e));
+});
+
 export default router;

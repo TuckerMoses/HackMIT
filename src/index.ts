@@ -10,6 +10,7 @@ import './utils/config';
 import userRouter from './routes/user.api';
 import annotatedPagesRouter from './routes/annotatedpage.api';
 import libraryRouter from './routes/library.api';
+import linkRouter from './routes/link.api';
 
 const app = express();
 
