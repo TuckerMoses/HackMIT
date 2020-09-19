@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
+import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import {
@@ -116,74 +117,83 @@ const Button = styled.button`
 const Profile = () => {
   const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
+  const [showAnnotationModal, setShowAnnotationModal] = useState(false);
 
   return (
-    <FlexContainer>
-      <Sidebar />
-      <ContentContainer>
-        <OptionsContainer>
-          <Tooltip title="Toggle privacy" placement="bottom">
-            <Button onClick={() => setPrivateProfile(!privateProfile)}>
-              {privateProfile ? (
-                <MdLockOutline size={25} color="darkred" />
-              ) : (
-                <MdLockOpen size={25} color="green" />
-              )}
-            </Button>
-          </Tooltip>
-          <Tooltip title="Share profile" placement="bottom">
-            <Button
-              onClick={() =>
-                navigator.clipboard
-                  .writeText('https://hackmit.org/')
-                  .then(() =>
-                    alert('Shareable profile link copied to clipboard 🚀')
-                  )
-              }
+    <>
+      <FlexContainer>
+        <Sidebar />
+        <ContentContainer>
+          <OptionsContainer>
+            <Tooltip title="Toggle privacy" placement="bottom">
+              <Button onClick={() => setPrivateProfile(!privateProfile)}>
+                {privateProfile ? (
+                  <MdLockOutline size={25} color="darkred" />
+                ) : (
+                  <MdLockOpen size={25} color="green" />
+                )}
+              </Button>
+            </Tooltip>
+            <Tooltip title="Share profile" placement="bottom">
+              <Button
+                onClick={() =>
+                  navigator.clipboard
+                    .writeText('https://hackmit.org/')
+                    .then(() =>
+                      alert('Shareable profile link copied to clipboard 🚀')
+                    )
+                }
+              >
+                <MdShare size={25} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Friends" placement="bottom">
+              <Button onClick={() => history.push('/friends')}>
+                <MdPeople size={25} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="More Info" placement="bottom">
+              <Button onClick={() => console.log('Add help modal')}>
+                <MdHelpOutline size={25} />
+              </Button>
+            </Tooltip>
+          </OptionsContainer>
+          <AvatarContainer>
+            <AvatarImgContainer>
+              <AvatarImg src="/images/elon.jpg" />
+            </AvatarImgContainer>
+            <AvatarName>Elon Musk</AvatarName>
+            <button
+              className="button is-primary is-light is-outlined"
+              onClick={() => setShowAnnotationModal(true)}
             >
-              <MdShare size={25} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Friends" placement="bottom">
-            <Button onClick={() => history.push('/friends')}>
-              <MdPeople size={25} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="More Info" placement="bottom">
-            <Button onClick={() => console.log('Add help modal')}>
-              <MdHelpOutline size={25} />
-            </Button>
-          </Tooltip>
-        </OptionsContainer>
-        <AvatarContainer>
-          <AvatarImgContainer>
-            <AvatarImg src="/images/elon.jpg" />
-          </AvatarImgContainer>
-          <AvatarName>Elon Musk</AvatarName>
-          <button
-            className="button is-primary is-light is-outlined"
-            onClick={() => console.log('hi')}
-          >
-            <span className="icon">
-              <i className="fas fa-plus-square"></i>
-            </span>
-            <span>New annotation</span>
-          </button>
-        </AvatarContainer>
-        <ToolbarContainer>
-          <RiFolderAddLine size={25} />
-          <BsSearch size={25} />
-        </ToolbarContainer>
-        <Bookshelf>
-          <ShelfItemContainer />
-          <ShelfItemContainer />
-          <ShelfItemContainer />
-          <ShelfItemContainer />
-          <ShelfItemContainer />
-          <ShelfItemContainer />
-        </Bookshelf>
-      </ContentContainer>
-    </FlexContainer>
+              <span className="icon">
+                <i className="fas fa-plus-square"></i>
+              </span>
+              <span>New annotation</span>
+            </button>
+          </AvatarContainer>
+          <ToolbarContainer>
+            <RiFolderAddLine size={25} />
+            <BsSearch size={25} />
+          </ToolbarContainer>
+          <Bookshelf>
+            <ShelfItemContainer />
+            <ShelfItemContainer />
+            <ShelfItemContainer />
+            <ShelfItemContainer />
+            <ShelfItemContainer />
+            <ShelfItemContainer />
+          </Bookshelf>
+        </ContentContainer>
+      </FlexContainer>
+      {showAnnotationModal && (
+        <CreateAnnotationModal
+          show={showAnnotationModal}
+          setShow={setShowAnnotationModal}
+        />
+      )}
+    </>
   );
 };
 
