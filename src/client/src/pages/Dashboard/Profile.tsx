@@ -8,6 +8,7 @@ import {
   MdHelpOutline,
   MdLockOpen,
   MdLockOutline,
+  MdPeople,
   MdShare,
 } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
@@ -59,7 +60,7 @@ const OptionsContainer = styled.div`
   right: 8rem;
   display: flex;
   justify-content: space-between;
-  width: 150px;
+  width: 200px;
   height: auto;
   border: 2px solid rgba(72, 72, 72, 0.2);
   padding: 5px;
@@ -113,6 +114,7 @@ const Button = styled.button`
 `;
 
 const Profile = () => {
+  const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
 
   return (
@@ -140,6 +142,11 @@ const Profile = () => {
               }
             >
               <MdShare size={25} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Friends" placement="bottom">
+            <Button onClick={() => history.push('/friends')}>
+              <MdPeople size={25} />
             </Button>
           </Tooltip>
           <Tooltip title="More Info" placement="bottom">
