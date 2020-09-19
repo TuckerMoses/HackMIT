@@ -16,7 +16,7 @@ const SidebarContainer = styled.div`
   max-width: 200px;
   width: 100%;
   margin-left: 2.5rem;
-  margin-top: 5%;
+  margin-top: 4%;
 `;
 
 const SidebarOption = styled.div`

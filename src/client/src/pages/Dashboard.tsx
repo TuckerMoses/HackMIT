@@ -9,7 +9,7 @@ import Sidebar from '../components/Sidebar';
 
 const ContentContainer = styled.div`
   text-align: center;
-  margin: 5% 0;
+  margin: 4% 0;
 `;
 
 const FlexContainer = styled.div`
