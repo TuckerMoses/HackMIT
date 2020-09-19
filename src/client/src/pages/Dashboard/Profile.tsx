@@ -93,7 +93,7 @@ const ShelfItemContainer = styled.div`
   margin: 0 10px 20px 10px;
 `;
 
-const User = () => {
+const Profile = () => {
   let history = useHistory();
 
   return (
