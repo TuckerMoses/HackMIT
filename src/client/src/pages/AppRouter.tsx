@@ -10,6 +10,7 @@ import Home from './Dashboard/Home';
 import Profile from './Dashboard/Profile';
 import Discover from './Dashboard/Discover';
 import ConnectBot from './Dashboard/ConnectBot';
+import LinkDetails from './Dashboard/LinkDetails';
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/discover" component={Discover} />
           <PrivateRoute exact path="/connector" component={ConnectBot} />
+          <PrivateRoute exact path="/link/:id" component={LinkDetails} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PublicRoute exact={false} path="/" component={Main} />
         </Switch>

@@ -8,6 +8,7 @@ import connectToDatabase from './utils/mongo';
 import './utils/config';
 
 import userRouter from './routes/user.api';
+import linkRouter from './routes/link.api';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cors());
 
 // API Routes
 app.use('/api/users', userRouter);
+app.use('/api/links', linkRouter);
 
 // Serving static files
 if (process.env.NODE_ENV === 'production') {

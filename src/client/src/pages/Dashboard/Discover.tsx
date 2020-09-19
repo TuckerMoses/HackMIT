@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 
 const ContentContainer = styled.div`
-  text-align: center;
   margin: 5% 0;
 `;
 
@@ -19,7 +18,7 @@ const Discover = () => {
     <FlexContainer>
       <Sidebar />
       <ContentContainer>
-        <h1>Discover Page</h1>
+        <h3 className="title is-3">Discover</h3>
         <button
           className="button is-primary"
           onClick={() => history.push('/dashboard')}
