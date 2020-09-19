@@ -61,14 +61,9 @@ interface SidebarOptions {
 
 const options: SidebarOptions[] = [
   {
-    title: 'Home',
-    path: '/home',
+    title: 'Feed',
+    path: '/dashboard',
     icon: <MdHome size={25} />,
-  },
-  {
-    title: 'Profile',
-    path: '/profile',
-    icon: <MdPalette size={25} />,
   },
   {
     title: 'Discover',
@@ -76,32 +71,34 @@ const options: SidebarOptions[] = [
     icon: <MdWidgets size={25} />,
   },
   {
-    title: 'Messages',
-    path: '/messages',
+    title: 'ConnectBot',
+    path: '/connector',
     icon: <MdContactMail size={25} />,
   },
   {
-    title: 'Friends',
-    path: '/friends',
-    icon: <MdPeople size={25} />,
+    title: 'Profile',
+    path: '/profile',
+    icon: <MdPalette size={25} />,
   },
 ];
 
 const Sidebar: React.FC<Props> = (props) => {
   return (
     <SidebarContainer>
-      {options.map((option) => (
-        <Link
-          to={option.path || '/'}
-          key={option.title + option.path}
-          style={{ color: 'gray' }}
-        >
-          <SidebarOption>
-            <Icon>{option.icon}</Icon>
-            <SidebarLabel>{option.title}</SidebarLabel>
-          </SidebarOption>
-        </Link>
-      ))}
+      {options.map((option) => {
+        return (
+          <Link
+            to={option.path || '/'}
+            key={option.title + option.path}
+            style={{ color: 'gray' }}
+          >
+            <SidebarOption>
+              <Icon>{option.icon}</Icon>
+              <SidebarLabel>{option.title}</SidebarLabel>
+            </SidebarOption>
+          </Link>
+        );
+      })}
     </SidebarContainer>
   );
 };

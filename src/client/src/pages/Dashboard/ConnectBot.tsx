@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 
 const ContentContainer = styled.div`
   text-align: center;
@@ -12,14 +12,14 @@ const FlexContainer = styled.div`
   display: flex;
 `;
 
-const User = () => {
+const ConnectBot = () => {
   let history = useHistory();
 
   return (
     <FlexContainer>
       <Sidebar />
       <ContentContainer>
-        <h1>User Page</h1>
+        <h1>ConnectBot Page</h1>
         <button
           className="button is-primary"
           onClick={() => history.push('/dashboard')}
@@ -31,4 +31,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default ConnectBot;
