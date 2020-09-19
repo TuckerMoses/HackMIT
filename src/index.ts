@@ -8,6 +8,8 @@ import connectToDatabase from './utils/mongo';
 import './utils/config';
 
 import userRouter from './routes/user.api';
+import annotatedPagesRouter from './routes/annotatedpage.api';
+import libraryRouter from './routes/library.api';
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use(cors());
 
 // API Routes
 app.use('/api/users', userRouter);
+app.use('/api/annotatedpages', annotatedPagesRouter);
+app.use('/api/library', libraryRouter);
 
 // Serving static files
 if (process.env.NODE_ENV === 'production') {
