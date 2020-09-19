@@ -12,10 +12,11 @@ import {
 const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px 0px;
+  padding-bottom: 40px;
   max-width: 200px;
   width: 100%;
   margin-left: 2.5rem;
+  margin-top: 5%;
 `;
 
 const SidebarOption = styled.div`
