@@ -8,6 +8,8 @@ import connectToDatabase from './utils/mongo';
 import './utils/config';
 
 import userRouter from './routes/user.api';
+import annotatedPagesRouter from './routes/annotatedpage.api';
+import libraryRouter from './routes/library.api';
 import linkRouter from './routes/link.api';
 
 const app = express();
@@ -23,6 +25,8 @@ app.use(cors());
 
 // API Routes
 app.use('/api/users', userRouter);
+app.use('/api/annotatedpages', annotatedPagesRouter);
+app.use('/api/library', libraryRouter);
 app.use('/api/links', linkRouter);
 
 // Serving static files
