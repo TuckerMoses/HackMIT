@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Field, FieldAttributes, Form, Formik } from 'formik';
 import BarLoader from 'react-spinners/BarLoader';
+import { fetchMetadata } from '../../api/linkApi';
 
 interface AnnotateParams {
   link: string;
+}
+
+interface Metadata {
+  url: string;
+  domain: string;
+  title: string;
+  img: string;
+  description: string;
+  favicon: string;
 }
 
 const initialValues = {
@@ -42,8 +52,21 @@ const FieldWrapper = ({
 
 const CreateAnnotationModal: React.FC<any> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = (values: AnnotateParams) => {
+  const [domain, setDomain] = useState<string>();
+  const [title, setTitle] = useState<string>();
+  const [showMetadata, setShowMetadata] = useState(false);
+  const handleSubmit = async (values: AnnotateParams) => {
     console.log('populate metadata');
+    fetchMetadata(values.link)
+      .then((res) => {
+        const data = res as Metadata;
+        setDomain(data.domain);
+        setTitle(data.title);
+        setShowMetadata(true);
+      })
+      .catch((err) => console.error(err));
+
+    //setIsLoading(false);
   };
   return (
     <>
@@ -87,6 +110,12 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
               <LoaderContainer>
                 <BarLoader width={180} color={'#00947e'} loading={isLoading} />
               </LoaderContainer>
+              {showMetadata && (
+                <>
+                  <p>{domain}</p>
+                  <p>{title}</p>
+                </>
+              )}
             </section>
             <footer className="modal-card-foot">
               <button
