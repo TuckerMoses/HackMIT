@@ -119,10 +119,16 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
             </section>
             <footer className="modal-card-foot">
               <button
-                className="button is-success"
+                className="button is-primary is-light is-outlined"
                 onClick={() => console.log('Call API')}
               >
                 Annotate
+              </button>
+              <button
+                className="button is-success is-light"
+                onClick={() => console.log('Store as non-annotated')}
+              >
+                Skip Annotation
               </button>
               <button className="button" onClick={() => props.setShow(false)}>
                 Cancel
