@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Field, FieldAttributes, Form, Formik } from 'formik';
+import BarLoader from 'react-spinners/BarLoader';
 
 interface AnnotateParams {
   link: string;
@@ -12,6 +13,10 @@ const initialValues = {
 
 const Button = styled.button`
   width: 30%;
+`;
+
+const LoaderContainer = styled.div`
+  margin-top: 10px;
 `;
 
 const FieldWrapper = ({
@@ -36,6 +41,7 @@ const FieldWrapper = ({
 };
 
 const CreateAnnotationModal: React.FC<any> = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = (values: AnnotateParams) => {
     console.log('populate metadata');
   };
@@ -68,7 +74,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
                   </FieldWrapper>
                   <Button
                     className="button is-primary is-light is-outlined"
-                    onClick={() => console.log('call API')}
+                    onClick={() => setIsLoading(true)}
                     type="submit"
                   >
                     <span className="icon">
@@ -78,6 +84,9 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
                   </Button>
                 </Form>
               </Formik>
+              <LoaderContainer>
+                <BarLoader width={180} color={'#00947e'} loading={isLoading} />
+              </LoaderContainer>
             </section>
             <footer className="modal-card-foot">
               <button
