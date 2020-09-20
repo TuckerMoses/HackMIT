@@ -3,6 +3,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 import url from 'url';
 import { JSDOM } from 'jsdom';
+// @ts-ignore
 import { Readability } from '@mozilla/readability';
 
 import { Follower, IFollower } from '../models/follower.model';

@@ -65,11 +65,6 @@ const options: SidebarOptions[] = [
     icon: <MdHome size={25} />,
   },
   {
-    title: 'Discover',
-    path: '/discover',
-    icon: <MdWidgets size={25} />,
-  },
-  {
     title: 'ConnectBot',
     path: '/connector',
     icon: <MdContactMail size={25} />,
