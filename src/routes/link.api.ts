@@ -2,6 +2,10 @@ import cheerio from 'cheerio';
 import express from 'express';
 import fetch from 'node-fetch';
 import url from 'url';
+import auth from '../middleware/auth';
+import { Follower, IFollower } from '../models/follower.model';
+import { Link } from '../models/link.model';
+import { User } from '../models/user.model';
 import errorHandler from './error';
 
 const router = express.Router();
@@ -10,6 +14,50 @@ const validateUrl = (inputURL: string): boolean => {
   const urlRegexp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
   return urlRegexp.test(inputURL);
 };
+
+router.post('/create', auth, async (req, res) => {
+  const { userId } = req;
+  const { linkUrl } = req.body;
+  const { description } = req.body;
+  const { privateStatus } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) return errorHandler(res, 'User does not exist.');
+  const username = `${user.firstName} ${user.lastName}`;
+
+  const newLink = new Link({
+    linkUrl,
+    userId,
+    username,
+    description,
+    privateStatus,
+  });
+
+  return newLink
+    .save()
+    .then(() => {
+      return res
+        .status(200)
+        .json({ success: true, message: 'New link saved.' });
+    })
+    .catch((err) => {
+      return errorHandler(res, err.message);
+    });
+});
+
+router.get('/', auth, async (req, res) => {
+  const { userId } = req;
+
+  // my following are all the request ive sent
+  const followingIds = (await Follower.find({ userId })).map(
+    (val: IFollower) => val.recipientId
+  );
+
+  // search for all post with userid that is in my following
+  const results = await Link.find({ userId: { $in: followingIds } });
+
+  return res.status(200).json({ success: true, data: results });
+});
 
 // get link preview
 router.post('/preview', async (req, res) => {
