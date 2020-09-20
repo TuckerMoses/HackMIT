@@ -47,9 +47,15 @@ const CreateFolderModal: React.FC<any> = (props) => {
       .then(async (res) => {
         const user = res as User;
         // Create Library
-        await createLibrary(user.data._id, values.folderName);
+        const newLibrary = await createLibrary(
+          user.data._id,
+          values.folderName
+        );
+        const tempLibrary = props.libraries.concat(newLibrary);
+        props.setLibraries(tempLibrary);
       })
       .catch((err) => console.error(err));
+    props.setShow(false);
   };
   return (
     <>

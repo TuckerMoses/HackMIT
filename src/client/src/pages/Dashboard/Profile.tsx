@@ -12,9 +12,19 @@ import {
   MdLockOutline,
   MdPeople,
   MdShare,
+  MdFolder,
 } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
+import { IoMdTrash } from 'react-icons/io';
 import { RiFolderAddLine } from 'react-icons/ri';
+
+interface libraryNode {
+  key: string;
+  annotatedPageId: string;
+  likes: bigint;
+  comments: string[];
+  children: libraryNode[];
+}
 
 const ContentContainer = styled.div`
   padding-top: 4%;
@@ -99,11 +109,14 @@ const Bookshelf = styled.div`
 `;
 
 const ShelfItemContainer = styled.div`
-  width: 240px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
   background-color: rgba(102, 51, 0, 0.2);
   border-radius: 20px;
+  border: 2px solid rgba(72, 72, 72, 0.2);
   margin: 0 10px 20px 10px;
+  position: relative;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
@@ -133,11 +146,60 @@ const TooltipButton = styled.button`
   }
 `;
 
+const ShelfButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border: none;
+  cursor: pointer;
+  background-color: rgba(102, 51, 0, 0.01);
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Indicator = styled.div`
+  position: absolute;
+  top: 5px;
+  left: 5px;
+`;
+
+const Title = styled.div`
+  font-weight: 700;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 25px;
+`;
+
+const PlaceholderImg = styled.div`
+  background-color: rgb(72, 72, 72, 0.3);
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 10px;
+`;
+
 const Profile = () => {
   const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
   const [showAnnotationModal, setShowAnnotationModal] = useState(false);
   const [showFolderModal, setShowFolderModal] = useState(false);
+  const [libraries, setLibraries] = useState<libraryNode[]>([]);
+
+  const updateLibrary = (library: libraryNode) => {
+    const index = libraries.indexOf(library);
+    const librariesCopy = [...libraries];
+    if (index > -1) {
+      librariesCopy.splice(index, 1);
+      setLibraries(librariesCopy);
+    }
+  };
 
   return (
     <>
@@ -206,12 +268,21 @@ const Profile = () => {
             </Tooltip>
           </ToolbarContainer>
           <Bookshelf>
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
+            {libraries.map((library: libraryNode) => (
+              <ShelfItemContainer>
+                <Tooltip title="Delete folder" placement="top">
+                  <ShelfButton onClick={() => updateLibrary(library)}>
+                    <IoMdTrash size={25} color="darkred" />
+                  </ShelfButton>
+                </Tooltip>
+                <Indicator>
+                  <MdFolder size={25} />
+                </Indicator>
+                <Title>{library.key}</Title>
+                <PlaceholderImg />
+                <Title>Author/Source</Title>
+              </ShelfItemContainer>
+            ))}
           </Bookshelf>
         </ContentContainer>
       </FlexContainer>
@@ -225,6 +296,8 @@ const Profile = () => {
         <CreateFolderModal
           show={showFolderModal}
           setShow={setShowFolderModal}
+          libraries={libraries}
+          setLibraries={setLibraries}
         />
       )}
     </>

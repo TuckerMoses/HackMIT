@@ -22,8 +22,10 @@ const createLibrary = (userId: string, name: string) => {
         ],
       }),
     })
-      .then(() => {
+      .then((res) => {
         console.log('Folder created');
+        console.log(res);
+        resolve(res.data.library.libs[0]);
       })
       .catch((err) => reject(err.response));
   });
