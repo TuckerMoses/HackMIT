@@ -76,7 +76,9 @@ const Home = () => {
     <FlexContainer>
       <Sidebar />
       <ContentContainer>
-        <h3 className="title is-3">Bookshelf for all your links</h3>
+        <h3 className="title is-3">
+          Your virtual nook for the new era of digital media
+        </h3>
         <FormContainer>
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             <Form>
