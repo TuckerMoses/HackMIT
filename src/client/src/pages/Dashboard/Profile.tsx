@@ -1,7 +1,7 @@
 // To be implemented in the future
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Tooltip from '@material-ui/core/Tooltip';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { IoMdTrash } from 'react-icons/io';
 import {
@@ -23,6 +23,7 @@ import AnnotateModal from '../../components/modals/AnnotateModal';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
 import CreateFolderModal from '../../components/modals/CreateFolderModal';
 import Sidebar from '../../components/Sidebar';
+import { getLibrariesByUser } from '../../api/libraryApi';
 
 interface libraryNode {
   key: string;
@@ -213,6 +214,23 @@ const Profile = () => {
   const [showAnnotateEditorModal, setShowAnnotateEditorModal] = useState(false);
   const [libraries, setLibraries] = useState<libraryNode[]>([]);
   const [content, setContent] = useState('');
+
+  useEffect(() => {
+    const getLibraries = async () => {
+      const user: any = await fetchMe('fetchMe', {
+        accessToken: auth.getAccessToken(),
+      });
+      const res = (await getLibrariesByUser(user.data._id as string)) as any;
+
+      const initiaLibs: any[] = [];
+      res.forEach((elt: { libs: any }) => {
+        initiaLibs.push(elt.libs[0]);
+      });
+
+      setLibraries(initiaLibs);
+    };
+    getLibraries();
+  }, []);
 
   const updateLibrary = (library: libraryNode) => {
     const index = libraries.indexOf(library);

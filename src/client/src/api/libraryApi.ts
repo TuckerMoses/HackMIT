@@ -62,4 +62,21 @@ const createLink = (userId: string, name: string, link: string) => {
   });
 };
 
-export { createLibrary, createLink };
+const getLibrariesByUser = (userId: string) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: `/api/library/getbyuserid?userId=${userId}`,
+      method: 'GET',
+      timeout: 0,
+    })
+      .then((response) => {
+        const library = response.data.library;
+        console.log('FOUND');
+        console.log(library);
+        resolve(library);
+      })
+      .catch((err) => reject(err.response));
+  });
+};
+
+export { createLibrary, createLink, getLibrariesByUser };
