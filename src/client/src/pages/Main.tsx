@@ -23,12 +23,11 @@ const Main = () => {
     <ContentContainer>
       <h1 className="title is-1">Welcome to WebShelf</h1>
       <p>
-        Dead simple monorepo boilerplate web project designed to take you from
-        Git Cloning to Heroku Deployment in less 5 minutes. 🚀🤩
+        Goodreads but for the new era of digital media. Social first, as smooth
+        as Twitter, and seamlessly integrated into knowledge management tools
+        like Notion and Roam.
       </p>
-      <a href="https://github.com/Orang-utan/ts-boilerplate">
-        Check out our Github
-      </a>
+      <a href="https://github.com/TuckerMoses/HackMIT">Check out our Github</a>
       <ButtonGroup>
         <Button
           className="button is-primary"

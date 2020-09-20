@@ -19,12 +19,22 @@ const ConnectBot = () => {
       <Sidebar />
       <ContentContainer>
         <h3 className="title is-3">Meet Someone New</h3>
-        <button
-          className="button is-primary"
-          onClick={() => history.push('/dashboard')}
-        >
-          Dashboard
-        </button>
+        <img
+          src="/images/chatbot_placeholder.png"
+          style={{ width: '50vw', marginTop: '20px' }}
+        />
+        <div style={{ marginTop: '20px' }}>
+          <input
+            className="input"
+            placeholder="Type your message here..."
+            style={{
+              display: 'inline-block',
+              width: '43vw',
+              marginRight: '20px',
+            }}
+          ></input>
+          <button className="button is-info">Send</button>
+        </div>
       </ContentContainer>
     </FlexContainer>
   );
