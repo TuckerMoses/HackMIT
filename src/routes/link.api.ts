@@ -53,8 +53,12 @@ router.get('/', auth, async (req, res) => {
     (val: IFollower) => val.recipientId
   );
 
+  followingIds.push(userId!);
+
   // search for all post with userid that is in my following
-  const results = await Link.find({ userId: { $in: followingIds } });
+  const results = await Link.find({ userId: { $in: followingIds } }).sort({
+    timestamp: 'desc',
+  });
 
   return res.status(200).json({ success: true, data: results });
 });

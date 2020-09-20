@@ -10,10 +10,8 @@ interface Link {
   _id: string;
   description?: string;
   linkUrl: string;
-  senderName: string;
+  username: string;
   timestamp: string;
-  votes: string;
-  pinned: boolean;
 }
 
 interface Metadata {
@@ -81,7 +79,7 @@ function LinkCard({ link }: { link: Link }) {
         <div className="media-content">
           <div className="content">
             <p>
-              <strong>{link.senderName}</strong>{' '}
+              <strong>{link.username}</strong>{' '}
               <small>{renderTimestamp(Date.parse(link.timestamp))}</small>
               {link.description && (
                 <>

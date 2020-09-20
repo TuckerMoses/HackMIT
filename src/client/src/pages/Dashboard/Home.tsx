@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
-import { Field, FieldAttributes, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
+import React from 'react';
+import { useQuery, useMutation } from 'react-query';
 import styled from 'styled-components';
 import auth from '../../api/auth';
-
-import { fetchMe } from '../../api/userApi';
-import { useQuery } from 'react-query';
-import { useHistory } from 'react-router-dom';
-
+import { fetchFeed, createNewLink } from '../../api/linkApi';
 import Sidebar from '../../components/Sidebar';
 import LinkCard from '../../components/ui/LinkCard';
 
@@ -18,8 +15,6 @@ const linkFeed = [
     senderName: 'John Smith',
     description: 'Hey! Check out this cool link',
     timestamp: '2020-07-06T20:36:59.414Z',
-    votes: '1',
-    pinned: false,
   },
   {
     _id: '2',
@@ -27,16 +22,12 @@ const linkFeed = [
     senderName: 'May Smith',
     description: 'Hey! Check out this cool link',
     timestamp: '2020-07-06T20:36:59.414Z',
-    votes: '1',
-    pinned: false,
   },
   {
     _id: '3',
     linkUrl: 'https://www.techcrunch.com',
     senderName: 'May Smith',
     timestamp: '2020-07-06T20:36:59.414Z',
-    votes: '1',
-    pinned: false,
   },
   {
     _id: '4',
@@ -44,8 +35,6 @@ const linkFeed = [
     senderName: 'May Smith',
     description: 'Hey! Check out this cool link',
     timestamp: '2020-07-06T20:36:59.414Z',
-    votes: '1',
-    pinned: false,
   },
 ];
 
@@ -70,32 +59,48 @@ const Button = styled.button`
 
 const initialValues = {
   linkUrl: '',
-  linkDescription: '',
-  private: false,
+  description: '',
+  privateStatus: false,
 };
 
 interface LinkParams {
   linkUrl: string;
-  linkDescription: string;
-  private: boolean;
+  description?: string;
+  privateStatus: boolean;
+}
+
+interface Link {
+  _id: string;
+  description?: string;
+  linkUrl: string;
+  username: string;
+  timestamp: string;
 }
 
 const Home = () => {
-  const {
-    isLoading,
-    isError,
-    data: myProfile,
-    error,
-  }: {
-    isLoading: boolean;
-    isError: boolean;
-    data: any;
-    error: any;
-  } = useQuery(['fetchMe', { accessToken: auth.getAccessToken() }], fetchMe);
-  let history = useHistory();
+  const feedQuery = useQuery(
+    ['fetchFeed', { accessToken: auth.getAccessToken() }],
+    fetchFeed
+  );
+  const [newLinkMutation] = useMutation(createNewLink);
 
-  const handleSubmit = (values: LinkParams) => {
-    console.log(values);
+  const handleSubmit = async (values: LinkParams) => {
+    try {
+      await newLinkMutation({
+        accessToken: auth.getAccessToken(),
+        link: values,
+      });
+      feedQuery.refetch();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const LinkFeed = (res: any) => {
+    const data = res as Link[];
+    if (data.length < 1) return <h1>Oops. No links yet.</h1>;
+
+    return data.map((link) => <LinkCard key={link._id} link={link} />);
   };
 
   return (
@@ -115,7 +120,7 @@ const Home = () => {
               />
 
               <Field
-                name="linkDescription"
+                name="description"
                 className="input"
                 type="text"
                 placeholder="What's cool about this link?"
@@ -123,7 +128,7 @@ const Home = () => {
               />
               <div>
                 <Field
-                  name="private"
+                  name="privateStatus"
                   className="checkbox"
                   type="checkbox"
                   style={{ margin: '10px 0px' }}
@@ -136,11 +141,9 @@ const Home = () => {
             </Form>
           </Formik>
         </FormContainer>
-
         <div style={{ margin: '40px 0px', width: '60%' }}>
-          {linkFeed.map((link) => (
-            <LinkCard key={link._id} link={link} />
-          ))}
+          {feedQuery.isLoading && <h1>Loading...</h1>}
+          {feedQuery.data && LinkFeed(feedQuery.data)}
         </div>
       </ContentContainer>
     </FlexContainer>
