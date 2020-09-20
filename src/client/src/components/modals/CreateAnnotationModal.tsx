@@ -94,17 +94,25 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
     props.setShow(false);
   };
   const fetchArticle = async (link: string) => {
+    const user: any = await fetchMe('fetchMe', {
+      accessToken: auth.getAccessToken(),
+    });
+    const content = await fetchLinkContent(user.data._id as string, link);
+    return content;
+
+    /*
     fetchMe('fetchMe', {
       accessToken: auth.getAccessToken(),
     })
-      .then(async (res) => {
+      .then((res) => {
         const user = res as User;
         // Create Library
-        const content = await fetchLinkContent(user.data._id, link);
+        const content = fetchLinkContent(user.data._id, link);
+        return content;
         console.log('INSIDE FETCH ARTICLE');
         console.log(content);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err));*/
     props.setShow(false);
   };
   return (
@@ -162,7 +170,9 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
                 onClick={() => {
                   addLink(title || 'To fix');
                   props.setShow(false);
-                  fetchArticle(link || 'To fix');
+                  const content = fetchArticle(link || 'To fix');
+                  props.setContent(content);
+                  props.setAnnotate(true);
                 }}
               >
                 Annotate

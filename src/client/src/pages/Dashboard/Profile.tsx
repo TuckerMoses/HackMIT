@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
 import CreateFolderModal from '../../components/modals/CreateFolderModal';
+import AnnotateModal from '../../components/modals/AnnotateModal';
 // To be implemented in the future
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -192,7 +193,9 @@ const Profile = () => {
   const [privateProfile, setPrivateProfile] = useState(true);
   const [showAnnotationModal, setShowAnnotationModal] = useState(false);
   const [showFolderModal, setShowFolderModal] = useState(false);
+  const [showAnnotateEditorModal, setShowAnnotateEditorModal] = useState(false);
   const [libraries, setLibraries] = useState<libraryNode[]>([]);
+  const [content, setContent] = useState('');
 
   const updateLibrary = (library: libraryNode) => {
     const index = libraries.indexOf(library);
@@ -294,6 +297,8 @@ const Profile = () => {
         <CreateAnnotationModal
           show={showAnnotationModal}
           setShow={setShowAnnotationModal}
+          setAnnotate={setShowAnnotateEditorModal}
+          setContent={setContent}
           libraries={libraries}
           setLibraries={setLibraries}
         />
@@ -304,6 +309,13 @@ const Profile = () => {
           setShow={setShowFolderModal}
           libraries={libraries}
           setLibraries={setLibraries}
+        />
+      )}
+      {showAnnotateEditorModal && (
+        <AnnotateModal
+          show={showAnnotateEditorModal}
+          setShow={setShowAnnotateEditorModal}
+          content={content}
         />
       )}
     </>
