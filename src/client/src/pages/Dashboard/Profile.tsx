@@ -187,6 +187,22 @@ const ImgContainer = styled.div`
   margin: auto;
 `;
 
+const LinkImgContainer = styled.div`
+  width: 150px;
+  height: 140px;
+  padding-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const LinkTitle = styled.div`
+  font-weight: 400;
+  text-align: center;
+  font-size: 15px;
+  overflow: hidden;
+  margin: 0 5px;
+`;
+
 const Profile = () => {
   const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
@@ -270,23 +286,53 @@ const Profile = () => {
             </Tooltip>
           </ToolbarContainer>
           <Bookshelf>
-            {libraries.map((library: libraryNode) => (
-              <ShelfItemContainer>
-                <Tooltip title="Delete folder" placement="top">
-                  <ShelfButton onClick={() => updateLibrary(library)}>
-                    <IoMdTrash size={25} color="darkred" />
-                  </ShelfButton>
-                </Tooltip>
-                <Indicator>
-                  <MdImportContacts size={25} />
-                </Indicator>
+            {libraries.map((library: libraryNode) => {
+              let isLink = false;
+              if (library.annotatedPageId !== '') {
+                isLink = true;
+                console.log(library.annotatedPageId);
+              }
+              return (
+                <ShelfItemContainer>
+                  {isLink ? (
+                    <>
+                      <Tooltip title="Delete file" placement="top">
+                        <ShelfButton onClick={() => updateLibrary(library)}>
+                          <IoMdTrash size={25} color="darkred" />
+                        </ShelfButton>
+                      </Tooltip>
+                      <Indicator>
+                        <MdImportContacts size={25} />
+                      </Indicator>
 
-                <ImgContainer>
-                  <MdFolder size={100} />
-                </ImgContainer>
-                <Title>{library.key}</Title>
-              </ShelfItemContainer>
-            ))}
+                      <LinkImgContainer>
+                        <img
+                          src={library.annotatedPageId}
+                          style={{ borderRadius: '20px' }}
+                        />
+                      </LinkImgContainer>
+                      <LinkTitle>{library.key}</LinkTitle>
+                    </>
+                  ) : (
+                    <>
+                      <Tooltip title="Delete folder" placement="top">
+                        <ShelfButton onClick={() => updateLibrary(library)}>
+                          <IoMdTrash size={25} color="darkred" />
+                        </ShelfButton>
+                      </Tooltip>
+                      <Indicator>
+                        <MdImportContacts size={25} />
+                      </Indicator>
+
+                      <ImgContainer>
+                        <MdFolder size={100} />
+                      </ImgContainer>
+                      <Title>{library.key}</Title>
+                    </>
+                  )}
+                </ShelfItemContainer>
+              );
+            })}
           </Bookshelf>
         </ContentContainer>
       </FlexContainer>

@@ -4,7 +4,7 @@ import { Field, FieldAttributes, Form, Formik } from 'formik';
 import BarLoader from 'react-spinners/BarLoader';
 import { fetchMetadata } from '../../api/linkApi';
 import { fetchMe } from '../../api/userApi';
-import { createLibrary } from '../../api/libraryApi';
+import { createLink } from '../../api/libraryApi';
 import auth from '../../api/auth';
 
 interface AnnotateParams {
@@ -62,6 +62,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [domain, setDomain] = useState<string>();
   const [title, setTitle] = useState<string>();
+  const [link, setLink] = useState<string>();
   const [showMetadata, setShowMetadata] = useState(false);
   const handleSubmit = async (values: AnnotateParams) => {
     console.log('populate metadata');
@@ -70,20 +71,21 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
         const data = res as Metadata;
         setDomain(data.domain);
         setTitle(data.title);
+        setLink(data.img);
         setShowMetadata(true);
       })
       .catch((err) => console.error(err));
 
     //setIsLoading(false);
   };
-  const addLink = async (title: string) => {
+  const addLink = async (title: string, link: string) => {
     fetchMe('fetchMe', {
       accessToken: auth.getAccessToken(),
     })
       .then(async (res) => {
         const user = res as User;
         // Create Library
-        const newLibrary = await createLibrary(user.data._id, title);
+        const newLibrary = await createLink(user.data._id, title, link);
         const tempLibrary = props.libraries.concat(newLibrary);
         props.setLibraries(tempLibrary);
       })
@@ -143,7 +145,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
               <button
                 className="button is-primary is-light is-outlined"
                 onClick={() => {
-                  addLink(title || 'To fix');
+                  addLink(title || 'To fix', link || '');
                   props.setShow(false);
                 }}
               >
@@ -152,7 +154,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
               <button
                 className="button is-success is-light"
                 onClick={() => {
-                  addLink(title || 'To fix');
+                  addLink(title || 'To fix', link || '');
                   props.setShow(false);
                 }}
               >
