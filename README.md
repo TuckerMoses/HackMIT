@@ -6,6 +6,8 @@ Home Page:
 
 ![home](docs/home.png "User Dashboard + AI Chatbot")
 
+![bookshelf](doc/bookshelf.png "Your digital bookshelf")
+
 ### The problem
 Our information diets are incredibly fragmented- from articles we don't make time for, to viral tweetstorms, to our daily podcasts, blog posts, and more.
 Book and article recommendations are strewn across texts, WhatsApp, Twitter, Facebook, email inboxes, and countless other channels. Furthermore, we're constantly inundated with content from every angle imaginable, and it's becoming increasingly difficult to separate the wheat from the chaff.
