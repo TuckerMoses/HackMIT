@@ -7,37 +7,6 @@ import { fetchFeed, createNewLink } from '../../api/linkApi';
 import Sidebar from '../../components/Sidebar';
 import LinkCard from '../../components/ui/LinkCard';
 
-// placeholder data
-const linkFeed = [
-  {
-    _id: '1',
-    linkUrl: 'https://www.google.com',
-    senderName: 'John Smith',
-    description: 'Hey! Check out this cool link',
-    timestamp: '2020-07-06T20:36:59.414Z',
-  },
-  {
-    _id: '2',
-    linkUrl: 'https://www.theverge.com',
-    senderName: 'May Smith',
-    description: 'Hey! Check out this cool link',
-    timestamp: '2020-07-06T20:36:59.414Z',
-  },
-  {
-    _id: '3',
-    linkUrl: 'https://www.techcrunch.com',
-    senderName: 'May Smith',
-    timestamp: '2020-07-06T20:36:59.414Z',
-  },
-  {
-    _id: '4',
-    linkUrl: 'https://www.theverge.com',
-    senderName: 'May Smith',
-    description: 'Hey! Check out this cool link',
-    timestamp: '2020-07-06T20:36:59.414Z',
-  },
-];
-
 const ContentContainer = styled.div`
   margin: 5% 0;
   padding: 0px 20px;

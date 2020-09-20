@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import url from 'url';
 import auth from '../middleware/auth';
 import { Follower, IFollower } from '../models/follower.model';
-import { Link } from '../models/link.model';
+import { ILink, Link } from '../models/link.model';
 import { User } from '../models/user.model';
 import errorHandler from './error';
 
@@ -56,9 +56,15 @@ router.get('/', auth, async (req, res) => {
   followingIds.push(userId!);
 
   // search for all post with userid that is in my following
-  const results = await Link.find({ userId: { $in: followingIds } }).sort({
-    timestamp: 'desc',
-  });
+  const results = (
+    await Link.find({ userId: { $in: followingIds } }).sort({
+      timestamp: 'desc',
+    })
+  ).filter(
+    (link: ILink) =>
+      (link.privateStatus === true && link.userId === userId) ||
+      link.privateStatus === false
+  );
 
   return res.status(200).json({ success: true, data: results });
 });
