@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { fetchMe } from '../../api/userApi';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
@@ -105,7 +106,6 @@ const Bookshelf = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   overflow: auto;
   padding-bottom: 5rem;

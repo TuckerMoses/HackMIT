@@ -54,7 +54,7 @@ const login = ({ email, password }: UserLogin) => {
   });
 };
 
-const fetchMe = (key: string, { accessToken }: { accessToken: string }) => {
+const fetchMe = (_: string, { accessToken }: { accessToken: string }) => {
   return new Promise((resolve, reject) => {
     secureAxios({
       url: '/api/users/me',

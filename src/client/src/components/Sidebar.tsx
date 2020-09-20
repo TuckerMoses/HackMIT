@@ -79,6 +79,11 @@ const options: SidebarOptions[] = [
     path: '/profile',
     icon: <MdPalette size={25} />,
   },
+  {
+    title: 'Friends',
+    path: '/friends',
+    icon: <MdPalette size={25} />,
+  },
 ];
 
 const Sidebar: React.FC<Props> = (props) => {

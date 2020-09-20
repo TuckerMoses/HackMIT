@@ -1,5 +1,11 @@
 import secureAxios from './apiClient';
 
+interface NewLink {
+  linkUrl: string;
+  description?: string;
+  privateStatus: boolean;
+}
+
 const fetchMetadata = (link: string) => {
   return new Promise((resolve, reject) => {
     secureAxios({
@@ -21,4 +27,70 @@ const fetchMetadata = (link: string) => {
   });
 };
 
-export { fetchMetadata };
+const createNewLink = ({
+  accessToken,
+  link: { linkUrl, description, privateStatus },
+}: {
+  accessToken: string;
+  link: NewLink;
+}) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: '/api/links/create',
+      method: 'POST',
+      timeout: 0,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        linkUrl,
+        description,
+        privateStatus,
+      }),
+    })
+      .then(() => resolve())
+      .catch((err) => reject(err.response));
+  });
+};
+
+const fetchFeed = (_: string, { accessToken }: { accessToken: string }) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: '/api/links/',
+      method: 'GET',
+      timeout: 0,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((response) => {
+        const feed = response.data.data;
+        resolve(feed);
+      })
+      .catch((err) => reject(err.response));
+  });
+};
+
+const fetchLinkAnnotation = (
+  _: string,
+  { accessToken, linkId }: { accessToken: string; linkId: string }
+) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: `/api/links/${linkId}/html`,
+      method: 'GET',
+      timeout: 0,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((response) => {
+        const feed = response.data.data;
+        resolve(feed);
+      })
+      .catch((err) => reject(err.response));
+  });
+};
+
+export { fetchMetadata, createNewLink, fetchFeed, fetchLinkAnnotation };
