@@ -2,18 +2,18 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-interface libraryNode {
+interface LibraryNode {
   key: string;
   annotatedPageId: string;
   likes: bigint;
   comments: string[];
-  children: libraryNode[];
+  children: LibraryNode[];
 }
 
 interface ILibrary extends mongoose.Document {
   _id: string;
   userId: string;
-  libs: libraryNode[];
+  libs: LibraryNode[];
 }
 
 const LibrarySchema = new Schema({
