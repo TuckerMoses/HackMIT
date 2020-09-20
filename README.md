@@ -1,5 +1,5 @@
 # WebShelf
-Your virtual nook for the new era of digital media 🤩📖
+Your virtual nook for the new era of digital media 🤩📖 WebShelf aims to link communities together one annotation at a time. Social first, smooth as Twitter, and seamlessly integrated into knowledge management tools. WebShelf is your personal file system for web content with the functionality of modern social media. 
 
 ### Demos
 
