@@ -16,7 +16,6 @@ const validateUrl = (inputURL: string): boolean => {
 };
 
 router.post('/newpage', async (req, res) => {
-<<<<<<< HEAD
     let {searchurl} = req.query;
     let {userId} = req.query;
     if(searchurl == undefined || userId == undefined){

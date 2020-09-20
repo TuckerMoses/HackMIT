@@ -17,7 +17,6 @@ router.post('/newlibrary', async (req, res) => {
     .catch((e) => errorHandler(res, e.message));
 });
 
-<<<<<<< HEAD
 router.put('/update', async(req, res) => {
     const{_id} = req.body;
     const{userId} = req.body;
