@@ -98,7 +98,7 @@ const Friends = () => {
           </Formik>
         </FormContainer>
 
-        <div style={{ width: '60%', marginTop: '40px' }}>
+        <div style={{ width: '60%', margin: '40px 0px' }}>
           {friendsList.map((friend: Friend) => (
             <FriendCard friend={friend} />
           ))}
