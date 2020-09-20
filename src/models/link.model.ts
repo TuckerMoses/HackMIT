@@ -10,6 +10,7 @@ interface ILink extends mongoose.Document {
   username: string;
   description: string;
   privateStatus: boolean;
+  html: string;
 }
 
 const LinkSchema = new Schema({
@@ -19,6 +20,7 @@ const LinkSchema = new Schema({
   userId: { type: String, required: true },
   description: { type: String, required: false },
   privateStatus: { type: Boolean, default: true },
+  html: { type: String, required: false },
 });
 
 const Link = mongoose.model<ILink>('Link', LinkSchema);

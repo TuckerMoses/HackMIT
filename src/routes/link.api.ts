@@ -2,11 +2,15 @@ import cheerio from 'cheerio';
 import express from 'express';
 import fetch from 'node-fetch';
 import url from 'url';
-import auth from '../middleware/auth';
+import { JSDOM } from 'jsdom';
+import { Readability } from '@mozilla/readability';
+
 import { Follower, IFollower } from '../models/follower.model';
 import { ILink, Link } from '../models/link.model';
 import { User } from '../models/user.model';
 import errorHandler from './error';
+
+import auth from '../middleware/auth';
 
 const router = express.Router();
 
@@ -114,6 +118,30 @@ router.post('/preview', async (req, res) => {
   }
 
   return res.status(200).json({ success: true, data: metaTagData });
+});
+
+// get link html
+// if link html is not in database refetch it
+router.get('/:linkId/html', auth, async (req, res) => {
+  const { linkId } = req.params;
+
+  const targetLink = await Link.findById(linkId);
+  if (!targetLink) return errorHandler(res, 'Link does not exist.');
+  if (targetLink.html)
+    return res.status(200).json({ success: true, data: targetLink.html });
+
+  // fetch raw page html
+  const resp = await fetch(targetLink.linkUrl);
+  const html = await resp.text();
+  const doc = new JSDOM(html);
+  const reader = new Readability(doc.window.document);
+  const article = reader.parse().textContent;
+  console.log(article);
+
+  targetLink.html = article;
+  await targetLink.save();
+
+  return res.status(200).json({ success: true, data: targetLink.html });
 });
 
 export default router;
