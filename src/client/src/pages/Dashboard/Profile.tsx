@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
+import CreateFolderModal from '../../components/modals/CreateFolderModal';
+// To be implemented in the future
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import {
@@ -11,9 +14,20 @@ import {
   MdLockOutline,
   MdPeople,
   MdShare,
+  MdFolder,
+  MdImportContacts,
 } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
+import { IoMdTrash } from 'react-icons/io';
 import { RiFolderAddLine } from 'react-icons/ri';
+
+interface libraryNode {
+  key: string;
+  annotatedPageId: string;
+  likes: bigint;
+  comments: string[];
+  children: libraryNode[];
+}
 
 const ContentContainer = styled.div`
   padding-top: 4%;
@@ -66,6 +80,10 @@ const OptionsContainer = styled.div`
   border: 2px solid rgba(72, 72, 72, 0.2);
   padding: 5px;
   border-radius: 10px;
+
+  @media (max-width: 1200px) {
+    right: 2rem;
+  }
 `;
 
 const ToolbarContainer = styled.div`
@@ -94,11 +112,14 @@ const Bookshelf = styled.div`
 `;
 
 const ShelfItemContainer = styled.div`
-  width: 240px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
   background-color: rgba(102, 51, 0, 0.2);
   border-radius: 20px;
+  border: 2px solid rgba(72, 72, 72, 0.2);
   margin: 0 10px 20px 10px;
+  position: relative;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
@@ -114,10 +135,73 @@ const Button = styled.button`
   }
 `;
 
+const TooltipButton = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: white;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const ShelfButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border: none;
+  cursor: pointer;
+  background-color: rgba(102, 51, 0, 0.01);
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Indicator = styled.div`
+  position: absolute;
+  top: 5px;
+  left: 5px;
+`;
+
+const Title = styled.div`
+  font-weight: 700;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 25px;
+`;
+
+const ImgContainer = styled.div`
+  width: 100px;
+  height: 100px;
+  padding-top: 30px;
+  margin: auto;
+`;
+
 const Profile = () => {
   const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
   const [showAnnotationModal, setShowAnnotationModal] = useState(false);
+  const [showFolderModal, setShowFolderModal] = useState(false);
+  const [libraries, setLibraries] = useState<libraryNode[]>([]);
+
+  const updateLibrary = (library: libraryNode) => {
+    const index = libraries.indexOf(library);
+    const librariesCopy = [...libraries];
+    if (index > -1) {
+      librariesCopy.splice(index, 1);
+      setLibraries(librariesCopy);
+    }
+  };
 
   return (
     <>
@@ -174,16 +258,35 @@ const Profile = () => {
             </button>
           </AvatarContainer>
           <ToolbarContainer>
-            <RiFolderAddLine size={25} />
-            <BsSearch size={25} />
+            <Tooltip title="Create folder" placement="bottom">
+              <TooltipButton onClick={() => setShowFolderModal(true)}>
+                <RiFolderAddLine size={25} />
+              </TooltipButton>
+            </Tooltip>
+            <Tooltip title="Search for a link" placement="bottom">
+              <TooltipButton onClick={() => console.log('Placeholder')}>
+                <BsSearch size={25} />
+              </TooltipButton>
+            </Tooltip>
           </ToolbarContainer>
           <Bookshelf>
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
-            <ShelfItemContainer />
+            {libraries.map((library: libraryNode) => (
+              <ShelfItemContainer>
+                <Tooltip title="Delete folder" placement="top">
+                  <ShelfButton onClick={() => updateLibrary(library)}>
+                    <IoMdTrash size={25} color="darkred" />
+                  </ShelfButton>
+                </Tooltip>
+                <Indicator>
+                  <MdImportContacts size={25} />
+                </Indicator>
+
+                <ImgContainer>
+                  <MdFolder size={100} />
+                </ImgContainer>
+                <Title>{library.key}</Title>
+              </ShelfItemContainer>
+            ))}
           </Bookshelf>
         </ContentContainer>
       </FlexContainer>
@@ -191,6 +294,16 @@ const Profile = () => {
         <CreateAnnotationModal
           show={showAnnotationModal}
           setShow={setShowAnnotationModal}
+          libraries={libraries}
+          setLibraries={setLibraries}
+        />
+      )}
+      {showFolderModal && (
+        <CreateFolderModal
+          show={showFolderModal}
+          setShow={setShowFolderModal}
+          libraries={libraries}
+          setLibraries={setLibraries}
         />
       )}
     </>
