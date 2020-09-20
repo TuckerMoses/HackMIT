@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { fetchMe } from '../../api/userApi';
-import { useHistory } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
-import CreateFolderModal from '../../components/modals/CreateFolderModal';
 // To be implemented in the future
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
 import Tooltip from '@material-ui/core/Tooltip';
+import React, { useState } from 'react';
+import { BsSearch } from 'react-icons/bs';
+import { IoMdTrash } from 'react-icons/io';
 import {
+  MdFolder,
   MdHelpOutline,
+  MdImportContacts,
   MdLockOpen,
   MdLockOutline,
   MdPeople,
   MdShare,
-  MdFolder,
-  MdImportContacts,
 } from 'react-icons/md';
-import { BsSearch } from 'react-icons/bs';
-import { IoMdTrash } from 'react-icons/io';
 import { RiFolderAddLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { fetchLinkContent } from '../../api/annnotationApi';
+import auth from '../../api/auth';
+import { fetchMe } from '../../api/userApi';
+import AnnotateModal from '../../components/modals/AnnotateModal';
+import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
+import CreateFolderModal from '../../components/modals/CreateFolderModal';
+import Sidebar from '../../components/Sidebar';
 
 interface libraryNode {
   key: string;
@@ -208,7 +210,9 @@ const Profile = () => {
   const [privateProfile, setPrivateProfile] = useState(true);
   const [showAnnotationModal, setShowAnnotationModal] = useState(false);
   const [showFolderModal, setShowFolderModal] = useState(false);
+  const [showAnnotateEditorModal, setShowAnnotateEditorModal] = useState(false);
   const [libraries, setLibraries] = useState<libraryNode[]>([]);
+  const [content, setContent] = useState('');
 
   const updateLibrary = (library: libraryNode) => {
     const index = libraries.indexOf(library);
@@ -217,6 +221,18 @@ const Profile = () => {
       librariesCopy.splice(index, 1);
       setLibraries(librariesCopy);
     }
+  };
+
+  const fetchContent = async (link: string) => {
+    const user: any = await fetchMe('fetchMe', {
+      accessToken: auth.getAccessToken(),
+    });
+
+    const res = (await fetchLinkContent(user.data._id as string, link)) as any;
+
+    setContent(res);
+    setShowAnnotationModal(false);
+    setShowAnnotateEditorModal(true);
   };
 
   return (
@@ -340,6 +356,9 @@ const Profile = () => {
         <CreateAnnotationModal
           show={showAnnotationModal}
           setShow={setShowAnnotationModal}
+          setAnnotate={setShowAnnotateEditorModal}
+          setContent={setContent}
+          fetchContent={fetchContent}
           libraries={libraries}
           setLibraries={setLibraries}
         />
@@ -350,6 +369,13 @@ const Profile = () => {
           setShow={setShowFolderModal}
           libraries={libraries}
           setLibraries={setLibraries}
+        />
+      )}
+      {showAnnotateEditorModal && (
+        <AnnotateModal
+          show={showAnnotateEditorModal}
+          setShow={setShowAnnotateEditorModal}
+          content={content}
         />
       )}
     </>

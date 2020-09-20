@@ -71,7 +71,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
         const data = res as Metadata;
         setDomain(data.domain);
         setTitle(data.title);
-        setLink(data.img);
+        setLink(values.link);
         setShowMetadata(true);
       })
       .catch((err) => console.error(err));
@@ -92,6 +92,13 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
       .catch((err) => console.error(err));
     props.setShow(false);
   };
+
+  const handleAnnotate = async () => {
+    if (link) {
+      props.fetchContent(link);
+    }
+  };
+
   return (
     <>
       {props.show && (
@@ -144,10 +151,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
             <footer className="modal-card-foot">
               <button
                 className="button is-primary is-light is-outlined"
-                onClick={() => {
-                  addLink(title || 'To fix', link || '');
-                  props.setShow(false);
-                }}
+                onClick={handleAnnotate}
               >
                 Annotate
               </button>
