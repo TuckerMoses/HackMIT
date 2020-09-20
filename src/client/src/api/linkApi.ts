@@ -72,4 +72,25 @@ const fetchFeed = (_: string, { accessToken }: { accessToken: string }) => {
   });
 };
 
-export { fetchMetadata, createNewLink, fetchFeed };
+const fetchLinkAnnotation = (
+  _: string,
+  { accessToken, linkId }: { accessToken: string; linkId: string }
+) => {
+  return new Promise((resolve, reject) => {
+    secureAxios({
+      url: `/api/links/${linkId}/html`,
+      method: 'GET',
+      timeout: 0,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((response) => {
+        const feed = response.data.data;
+        resolve(feed);
+      })
+      .catch((err) => reject(err.response));
+  });
+};
+
+export { fetchMetadata, createNewLink, fetchFeed, fetchLinkAnnotation };

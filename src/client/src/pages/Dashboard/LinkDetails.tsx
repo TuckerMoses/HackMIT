@@ -1,6 +1,9 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import auth from '../../api/auth';
+import { fetchLinkAnnotation } from '../../api/linkApi';
 import Sidebar from '../../components/Sidebar';
 
 const ContentContainer = styled.div`
@@ -12,8 +15,13 @@ const FlexContainer = styled.div`
 `;
 
 const LinkDetails: React.FC<any> = (props) => {
-  let history = useHistory();
+  const history = useHistory();
   const linkId = props.match.params.id;
+
+  const annotationQuery = useQuery(
+    ['fetchLinkAnnotation', { accessToken: auth.getAccessToken(), linkId }],
+    fetchLinkAnnotation
+  );
 
   return (
     <FlexContainer>
@@ -35,6 +43,7 @@ const LinkDetails: React.FC<any> = (props) => {
         <div style={{ marginTop: '20px' }}>
           <p>Link Id: {linkId}</p>
         </div>
+        {annotationQuery.data}
       </ContentContainer>
     </FlexContainer>
   );
