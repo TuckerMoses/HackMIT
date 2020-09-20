@@ -29,4 +29,4 @@ for page in pastebin_url['library']:
             "_id": page['_id'],
             "summary": data2
             }
-    requests.put(url = API_ENDPOINT_UPDATE, json = dataToSend, headers = headers)
+    requests.post(url = API_NEDPOINT_UPDATE, json = dataToSend, headers = headers)

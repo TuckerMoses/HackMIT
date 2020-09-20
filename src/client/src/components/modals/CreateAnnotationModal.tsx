@@ -3,9 +3,17 @@ import styled from 'styled-components';
 import { Field, FieldAttributes, Form, Formik } from 'formik';
 import BarLoader from 'react-spinners/BarLoader';
 import { fetchMetadata } from '../../api/linkApi';
+import { fetchMe } from '../../api/userApi';
+import { createLibrary } from '../../api/libraryApi';
+import auth from '../../api/auth';
 
 interface AnnotateParams {
   link: string;
+}
+
+// Hacky, eventually replace
+interface User {
+  data: any;
 }
 
 interface Metadata {
@@ -68,6 +76,20 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
 
     //setIsLoading(false);
   };
+  const addLink = async (title: string) => {
+    fetchMe('fetchMe', {
+      accessToken: auth.getAccessToken(),
+    })
+      .then(async (res) => {
+        const user = res as User;
+        // Create Library
+        const newLibrary = await createLibrary(user.data._id, title);
+        const tempLibrary = props.libraries.concat(newLibrary);
+        props.setLibraries(tempLibrary);
+      })
+      .catch((err) => console.error(err));
+    props.setShow(false);
+  };
   return (
     <>
       {props.show && (
@@ -120,13 +142,19 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
             <footer className="modal-card-foot">
               <button
                 className="button is-primary is-light is-outlined"
-                onClick={() => console.log('Call API')}
+                onClick={() => {
+                  addLink(title || 'To fix');
+                  props.setShow(false);
+                }}
               >
                 Annotate
               </button>
               <button
                 className="button is-success is-light"
-                onClick={() => console.log('Store as non-annotated')}
+                onClick={() => {
+                  addLink(title || 'To fix');
+                  props.setShow(false);
+                }}
               >
                 Skip Annotation
               </button>
