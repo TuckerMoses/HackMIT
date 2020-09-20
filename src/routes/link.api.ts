@@ -135,13 +135,27 @@ router.get('/:linkId/html', auth, async (req, res) => {
   const html = await resp.text();
   const doc = new JSDOM(html);
   const reader = new Readability(doc.window.document);
-  const article = reader.parse().textContent;
-  console.log(article);
+  const article = reader.parse().content;
 
   targetLink.html = article;
   await targetLink.save();
 
   return res.status(200).json({ success: true, data: targetLink.html });
+});
+
+// TESTING ROUTES BELOW
+// get all users
+router.get('/', (_, res) => {
+  Link.find({})
+    .then((result) => res.status(200).json({ success: true, result }))
+    .catch((e) => errorHandler(res, e));
+});
+
+// delete all users
+router.delete('/', (_, res) => {
+  Link.deleteMany({})
+    .then(() => res.status(200).json({ success: true }))
+    .catch((e) => errorHandler(res, e));
 });
 
 export default router;

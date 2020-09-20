@@ -40,10 +40,10 @@ const LinkDetails: React.FC<any> = (props) => {
         <h3 className="title is-3" style={{ display: 'inline' }}>
           Link Details
         </h3>
-        <div style={{ marginTop: '20px' }}>
-          <p>Link Id: {linkId}</p>
-        </div>
-        {annotationQuery.data}
+        <div
+          dangerouslySetInnerHTML={{ __html: annotationQuery.data as string }}
+          style={{ width: '60vw', marginTop: '20px' }}
+        ></div>
       </ContentContainer>
     </FlexContainer>
   );
