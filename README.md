@@ -17,13 +17,13 @@ Your virtual nook for the new era of digital media 🤩📖 WebShelf aims to lin
 
 ![bookshelf](docs/highlight.png 'Share and annotate your links')
 
-### The problem
+### Problem
 
 Our information diets are incredibly fragmented- from articles we don't make time for, to viral tweetstorms, to our daily podcasts, blog posts, and more.
 Book and article recommendations are strewn across texts, WhatsApp, Twitter, Facebook, email inboxes, and countless other channels. Furthermore, we're constantly inundated with content from every angle imaginable, and it's becoming increasingly difficult to separate the wheat from the chaff.
 Media is meant to make us think and be social; why don't we have a platform for consolidating and sharing with others what we're consuming?
 
-### The motivation
+### Motivation
 
 This problem is both blatantly obvious and incredibly important to solve. I noticed it and decided it was worth working on for me after observing a few trends:
 
@@ -33,6 +33,6 @@ This problem is both blatantly obvious and incredibly important to solve. I noti
 - Nearly every 'successful' or highly visible person has reading recommendations on a blog or somewhere else, but they're hopelessly strewn around the web. Open-sourcing these recommendations can help people understand the way others see the world.
 - No one has capitalized on this (Pocket, Readwise, Goodreads, etc) as a social-first opportunity yet. With Notion/Roam APIs becoming fully baked soon, now's the time to build!
 
-### The solution
+### Solution
 
 Webshelf is a digital bookshelf of sorts. Inherently social while still being a valuable tool for personal use.
