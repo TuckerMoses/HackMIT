@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 interface LibraryNode {
   key: string;
+  pageurl: string;
   annotatedPageId: string;
   likes: bigint;
   comments: string[];

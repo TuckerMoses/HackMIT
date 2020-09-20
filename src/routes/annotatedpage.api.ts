@@ -59,6 +59,19 @@ router.put('/update', async(req, res)=> {
     });
 });
 
+router.put('/addsummary', async(req, res) => {
+    const {_id} = req.body;
+    const {summary} = req.body;
+    const filter = { _id, };
+    const update = { summary, };
+    return AnnotatedPage.findByIdAndUpdate(filter, update, {
+        new: true,
+    }, (err, page) => {
+        if(err) return err;
+        return res.status(200).json({success: true, updatedPage: page});
+    });
+});
+
 router.get('/get', async (req, res) => {
     let {_id} = req.query;
     if(_id == undefined){
@@ -68,6 +81,13 @@ router.get('/get', async (req, res) => {
     return AnnotatedPage.findById(_id, (err, page) => {
         if(err) return err;
         return res.status(200).json({success: true, page: page});
+    });
+});
+
+router.get('/getmissingsummaries', async (req, res) => {
+    return AnnotatedPage.find({summary: {$not: {$exists: true}}}, (err, library) => {
+        if (err) return err;
+        return res.status(200).json({ success: true, library });
     });
 });
 

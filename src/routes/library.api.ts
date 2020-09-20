@@ -43,6 +43,18 @@ router.get('/get', async (req, res) => {
   });
 });
 
+router.get('/getbyuserid', async (req, res) => {
+  let { userId } = req.query;
+  if(userId == undefined){
+    return res.status(400).json({failure: "no _id given"});
+  }
+  userId = userId.toString();
+  return Library.find({userId}, (err, library) => {
+    if (err) return err;
+    return res.status(200).json({ success: true, library });
+  });
+});
+
 router.delete('/delete', async (req, res) => {
   const { libraryId } = req.query;
   return Library.findByIdAndDelete(libraryId)
