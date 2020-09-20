@@ -24,7 +24,7 @@ router.put('/update', async(req, res) => {
     return Library.findByIdAndUpdate(_id, {
         userId: userId,
         libs: libs,
-    }, (err, docs) => {
+    }, {new: true}, (err, docs) => {
         if(err) return err;
         return res.status(200).json({success: true, updatedLib: docs});
     })
