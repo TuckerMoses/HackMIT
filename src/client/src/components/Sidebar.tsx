@@ -15,8 +15,8 @@ const SidebarContainer = styled.div`
   padding-bottom: 40px;
   max-width: 200px;
   width: 100%;
-  margin-left: 15vw;
-  margin-top: 5%;
+  margin-left: 2.5rem;
+  margin-top: 4%;
 `;
 
 const SidebarOption = styled.div`
@@ -48,7 +48,6 @@ const SidebarLabel = styled.div`
 
 const Icon = styled.div`
   margin: 0 15px;
-  m
 `;
 
 interface Props {}

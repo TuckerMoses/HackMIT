@@ -90,7 +90,7 @@ function LinkCard({ link }: { link: Link }) {
                 </>
               )}
               <br />
-              {preview && preview.description}
+              {preview && <i>"{preview.description}"</i>}
             </p>
           </div>
           <nav className="level is-mobile">
