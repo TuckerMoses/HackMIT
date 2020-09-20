@@ -1,4 +1,10 @@
 # WebShelf
+Your virtual nook for the new era of digital media 🤩📖
+
+### Demos
+Home Page:
+
+![home](docs/home.png "User Dashboard + AI Chatbot")
 
 ### The problem
 Our information diets are incredibly fragmented- from articles we don't make time for, to viral tweetstorms, to our daily podcasts, blog posts, and more.
