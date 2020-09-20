@@ -6,7 +6,9 @@ Home Page:
 
 ![home](docs/home.png "User Dashboard + AI Chatbot")
 
-![bookshelf](doc/bookshelf.png "Your digital bookshelf")
+![bookshelf](docs/bookshelf.png "Your digital bookshelf")
+
+![bookshelf](docs/highlight.png "Share ad annotate your links")
 
 ### The problem
 Our information diets are incredibly fragmented- from articles we don't make time for, to viral tweetstorms, to our daily podcasts, blog posts, and more.
