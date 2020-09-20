@@ -2,12 +2,15 @@
 Your virtual nook for the new era of digital media 🤩📖
 
 ### Demos
-Home Page:
+
+#### User Dashboard + AI Chatbot:
 
 ![home](docs/home.png "User Dashboard + AI Chatbot")
 
+#### Your digital bookshelf:
 ![bookshelf](docs/bookshelf.png "Your digital bookshelf")
 
+#### Share ad annotate your links
 ![bookshelf](docs/highlight.png "Share ad annotate your links")
 
 ### The problem
