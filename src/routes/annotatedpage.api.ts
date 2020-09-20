@@ -4,7 +4,6 @@ import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import url from 'url';
 import jsdom from 'jsdom';
-
 import errorHandler from './error';
 import {Library} from "../models/library.model";
 
@@ -17,6 +16,7 @@ const validateUrl = (inputURL: string): boolean => {
 };
 
 router.post('/newpage', async (req, res) => {
+<<<<<<< HEAD
     let {searchurl} = req.query;
     let {userId} = req.query;
     if(searchurl == undefined || userId == undefined){
@@ -80,4 +80,3 @@ router.delete('/delete', async(req, res) => {
 });
 
 export default router;
-

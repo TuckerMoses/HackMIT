@@ -27,6 +27,9 @@ const AnnotatedPageSchema = new Schema({
     summary: {type: String, required: false},
 });
 
-const AnnotatedPage = mongoose.model<IAnnotatedPage>('AnnotatedPage', AnnotatedPageSchema);
+const AnnotatedPage = mongoose.model<IAnnotatedPage>(
+  'AnnotatedPage',
+  AnnotatedPageSchema
+);
 
 export { AnnotatedPage, IAnnotatedPage };
