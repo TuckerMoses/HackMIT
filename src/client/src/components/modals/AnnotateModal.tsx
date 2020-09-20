@@ -25,6 +25,11 @@ const AnnotateModal: React.FC<any> = (props) => {
             <section className="modal-card-body">
               <Annotate content={props.content} />
             </section>
+            <footer className="modal-card-foot">
+              <button className="button" onClick={() => props.setShow(false)}>
+                Cancel
+              </button>
+            </footer>
           </div>
         </div>
       )}

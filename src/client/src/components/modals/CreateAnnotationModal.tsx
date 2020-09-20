@@ -62,6 +62,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [domain, setDomain] = useState<string>();
   const [title, setTitle] = useState<string>();
+  const [img, setImg] = useState<string>();
   const [link, setLink] = useState<string>();
   const [showMetadata, setShowMetadata] = useState(false);
   const handleSubmit = async (values: AnnotateParams) => {
@@ -71,6 +72,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
         const data = res as Metadata;
         setDomain(data.domain);
         setTitle(data.title);
+        setImg(data.img);
         setLink(values.link);
         setShowMetadata(true);
       })
@@ -151,14 +153,17 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
             <footer className="modal-card-foot">
               <button
                 className="button is-primary is-light is-outlined"
-                onClick={handleAnnotate}
+                onClick={() => {
+                  handleAnnotate();
+                  addLink(title || 'To fix', img || '');
+                }}
               >
                 Annotate
               </button>
               <button
                 className="button is-success is-light"
                 onClick={() => {
-                  addLink(title || 'To fix', link || '');
+                  addLink(title || 'To fix', img || '');
                   props.setShow(false);
                 }}
               >
