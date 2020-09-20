@@ -104,7 +104,10 @@ const Home = () => {
                 />
                 <label> Make Private</label>
               </div>
-              <Button className="button is-primary" type="submit">
+              <Button
+                className="button is-primary is-light is-outlined"
+                type="submit"
+              >
                 Save
               </Button>
             </Form>

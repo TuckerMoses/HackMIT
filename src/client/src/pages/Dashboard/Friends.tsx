@@ -20,7 +20,7 @@ const Friends = () => {
       <ContentContainer>
         <h3 className="title is-3">Your Friends!</h3>
         <button
-          className="button is-primary"
+          className="button is-primary is-light is-outlined"
           onClick={() => history.push('/dashboard')}
         >
           Dashboard

@@ -20,7 +20,7 @@ const ConnectBot = () => {
       <ContentContainer>
         <h3 className="title is-3">Meet Someone New</h3>
         <button
-          className="button is-primary"
+          className="button is-primary is-light is-outlined"
           onClick={() => history.push('/dashboard')}
         >
           Dashboard
