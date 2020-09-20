@@ -15,7 +15,7 @@ const SidebarContainer = styled.div`
   padding-bottom: 40px;
   max-width: 200px;
   width: 100%;
-  margin-left: 2.5rem;
+  margin-left: 15vw;
   margin-top: 5%;
 `;
 

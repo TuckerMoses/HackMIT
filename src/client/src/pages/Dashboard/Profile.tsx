@@ -18,7 +18,7 @@ const Profile = () => {
     <FlexContainer>
       <Sidebar />
       <ContentContainer>
-        <h3 className="title is-3">Profile</h3>
+        <h3 className="title is-3">My Profile</h3>
         <button
           className="button is-primary"
           onClick={() => history.push('/dashboard')}
