@@ -1,5 +1,5 @@
 # WebShelf
-Your virtual nook for the new era of digital media 🤩📖 WebShelf aims to link communities together one annotation at a time. Social first, smooth as Twitter, and seamlessly integrated into knowledge management tools. WebShelf is your personal file system for web content with the functionality of modern social media. 
+Your virtual nook for the new era of digital media 🤩📖 WebShelf aims to link communities together one annotation at a time. Social first, smooth as Twitter, and seamlessly integrated into knowledge management tools. WebShelf is your personal file system for web content with the functionality of modern social media. With convenient webpage highlights and annotations, communal features such as public-facing libraries, a personalized feed (likes, comments, shares), and an ML ConnectBot that uses your historical preferences to automatically spark relevant conversations between users, our platform will usher in a new medium for connectivity.
 
 ### Demos
 
@@ -10,7 +10,7 @@ Your virtual nook for the new era of digital media 🤩📖 WebShelf aims to lin
 #### Your digital bookshelf:
 ![bookshelf](docs/bookshelf.png "Your digital bookshelf")
 
-#### Share and annotate your links
+#### Share and annotate your links:
 ![bookshelf](docs/highlight.png "Share and annotate your links")
 
 ### The problem
@@ -27,4 +27,4 @@ This problem is both blatantly obvious and incredibly important to solve. I noti
 * No one has capitalized on this (Pocket, Readwise, Goodreads, etc) as a social-first opportunity yet. With Notion/Roam APIs becoming fully baked soon, now's the time to build!
 
 ### The solution
-Webshelf is a digital bookshelf of sorts, that is inherently social while still being a valuable tool for personal use.
+Webshelf is a digital bookshelf of sorts. Inherently social while still being a valuable tool for personal use.
