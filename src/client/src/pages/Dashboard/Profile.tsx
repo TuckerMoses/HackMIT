@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
+import CreateFolderModal from '../../components/modals/CreateFolderModal';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import {
@@ -66,6 +67,10 @@ const OptionsContainer = styled.div`
   border: 2px solid rgba(72, 72, 72, 0.2);
   padding: 5px;
   border-radius: 10px;
+
+  @media (max-width: 1200px) {
+    right: 2rem;
+  }
 `;
 
 const ToolbarContainer = styled.div`
@@ -114,10 +119,25 @@ const Button = styled.button`
   }
 `;
 
+const TooltipButton = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: white;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const Profile = () => {
   const history = useHistory();
   const [privateProfile, setPrivateProfile] = useState(true);
   const [showAnnotationModal, setShowAnnotationModal] = useState(false);
+  const [showFolderModal, setShowFolderModal] = useState(false);
 
   return (
     <>
@@ -174,8 +194,16 @@ const Profile = () => {
             </button>
           </AvatarContainer>
           <ToolbarContainer>
-            <RiFolderAddLine size={25} />
-            <BsSearch size={25} />
+            <Tooltip title="Create folder" placement="bottom">
+              <TooltipButton onClick={() => setShowFolderModal(true)}>
+                <RiFolderAddLine size={25} />
+              </TooltipButton>
+            </Tooltip>
+            <Tooltip title="Search for a link" placement="bottom">
+              <TooltipButton onClick={() => console.log('Placeholder')}>
+                <BsSearch size={25} />
+              </TooltipButton>
+            </Tooltip>
           </ToolbarContainer>
           <Bookshelf>
             <ShelfItemContainer />
@@ -191,6 +219,12 @@ const Profile = () => {
         <CreateAnnotationModal
           show={showAnnotationModal}
           setShow={setShowAnnotationModal}
+        />
+      )}
+      {showFolderModal && (
+        <CreateFolderModal
+          show={showFolderModal}
+          setShow={setShowFolderModal}
         />
       )}
     </>
