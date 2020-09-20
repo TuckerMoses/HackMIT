@@ -6,6 +6,7 @@ import { fetchMetadata } from '../../api/linkApi';
 import { fetchMe } from '../../api/userApi';
 import { createLibrary } from '../../api/libraryApi';
 import auth from '../../api/auth';
+import { fetchLinkContent } from '../../api/annnotationApi';
 
 interface AnnotateParams {
   link: string;
@@ -62,6 +63,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [domain, setDomain] = useState<string>();
   const [title, setTitle] = useState<string>();
+  const [link, setLink] = useState<string>();
   const [showMetadata, setShowMetadata] = useState(false);
   const handleSubmit = async (values: AnnotateParams) => {
     console.log('populate metadata');
@@ -70,6 +72,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
         const data = res as Metadata;
         setDomain(data.domain);
         setTitle(data.title);
+        setLink(values.link);
         setShowMetadata(true);
       })
       .catch((err) => console.error(err));
@@ -86,6 +89,20 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
         const newLibrary = await createLibrary(user.data._id, title);
         const tempLibrary = props.libraries.concat(newLibrary);
         props.setLibraries(tempLibrary);
+      })
+      .catch((err) => console.error(err));
+    props.setShow(false);
+  };
+  const fetchArticle = async (link: string) => {
+    fetchMe('fetchMe', {
+      accessToken: auth.getAccessToken(),
+    })
+      .then(async (res) => {
+        const user = res as User;
+        // Create Library
+        const content = await fetchLinkContent(user.data._id, link);
+        console.log('INSIDE FETCH ARTICLE');
+        console.log(content);
       })
       .catch((err) => console.error(err));
     props.setShow(false);
@@ -145,6 +162,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
                 onClick={() => {
                   addLink(title || 'To fix');
                   props.setShow(false);
+                  fetchArticle(link || 'To fix');
                 }}
               >
                 Annotate
