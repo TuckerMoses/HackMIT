@@ -75,9 +75,9 @@ const options: SidebarOptions[] = [
     icon: <MdPalette size={25} />,
   },
   {
-    title: 'Friends',
+    title: 'Discover',
     path: '/friends',
-    icon: <MdPalette size={25} />,
+    icon: <MdWidgets size={25} />,
   },
 ];
 
