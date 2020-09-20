@@ -5,6 +5,11 @@ import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
 import CreateFolderModal from '../../components/modals/CreateFolderModal';
 import AnnotateModal from '../../components/modals/AnnotateModal';
+import { fetchMetadata } from '../../api/linkApi';
+import { fetchMe } from '../../api/userApi';
+import { fetchLinkContent } from '../../api/annnotationApi';
+import { createLibrary } from '../../api/libraryApi';
+import auth from '../../api/auth';
 // To be implemented in the future
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -206,6 +211,18 @@ const Profile = () => {
     }
   };
 
+  const fetchContent = async (link: string) => {
+    const user: any = await fetchMe('fetchMe', {
+      accessToken: auth.getAccessToken(),
+    });
+
+    const res = (await fetchLinkContent(user.data._id as string, link)) as any;
+
+    setContent(res);
+    setShowAnnotationModal(false);
+    setShowAnnotateEditorModal(true);
+  };
+
   return (
     <>
       <FlexContainer>
@@ -299,6 +316,7 @@ const Profile = () => {
           setShow={setShowAnnotationModal}
           setAnnotate={setShowAnnotateEditorModal}
           setContent={setContent}
+          fetchContent={fetchContent}
           libraries={libraries}
           setLibraries={setLibraries}
         />

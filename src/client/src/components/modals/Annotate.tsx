@@ -4,8 +4,6 @@ import { hot } from 'react-hot-loader';
 import { TokenAnnotator } from 'react-text-annotate';
 import { MdChatBubble } from 'react-icons/md';
 
-const TEXT = `On Monday night , Mr. Fallon will have a co-host for the first time : The rapper Cardi B , who just released her first album, " Invasion of Privacy . "`;
-
 const TAG_COLORS = {
   ORG: '#00ffa2',
   PERSON: '#84d2ff',
@@ -34,7 +32,7 @@ class Annotate extends React.Component<any, any> {
   };
 
   render() {
-    this.props.content.then((res: any) => this.setState({ content: res }));
+    const TEXT = this.props.content;
 
     return (
       <div style={{ padding: 24, fontFamily: 'IBM Plex Sans' }}>

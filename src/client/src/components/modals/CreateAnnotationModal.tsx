@@ -4,9 +4,9 @@ import { Field, FieldAttributes, Form, Formik } from 'formik';
 import BarLoader from 'react-spinners/BarLoader';
 import { fetchMetadata } from '../../api/linkApi';
 import { fetchMe } from '../../api/userApi';
+import { fetchLinkContent } from '../../api/annnotationApi';
 import { createLibrary } from '../../api/libraryApi';
 import auth from '../../api/auth';
-import { fetchLinkContent } from '../../api/annnotationApi';
 
 interface AnnotateParams {
   link: string;
@@ -93,28 +93,13 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
       .catch((err) => console.error(err));
     props.setShow(false);
   };
-  const fetchArticle = async (link: string) => {
-    const user: any = await fetchMe('fetchMe', {
-      accessToken: auth.getAccessToken(),
-    });
-    const content = await fetchLinkContent(user.data._id as string, link);
-    return content;
 
-    /*
-    fetchMe('fetchMe', {
-      accessToken: auth.getAccessToken(),
-    })
-      .then((res) => {
-        const user = res as User;
-        // Create Library
-        const content = fetchLinkContent(user.data._id, link);
-        return content;
-        console.log('INSIDE FETCH ARTICLE');
-        console.log(content);
-      })
-      .catch((err) => console.error(err));*/
-    props.setShow(false);
+  const handleAnnotate = async () => {
+    if (link) {
+      props.fetchContent(link);
+    }
   };
+
   return (
     <>
       {props.show && (
@@ -167,13 +152,7 @@ const CreateAnnotationModal: React.FC<any> = (props) => {
             <footer className="modal-card-foot">
               <button
                 className="button is-primary is-light is-outlined"
-                onClick={() => {
-                  addLink(title || 'To fix');
-                  props.setShow(false);
-                  const content = fetchArticle(link || 'To fix');
-                  props.setContent(content);
-                  props.setAnnotate(true);
-                }}
+                onClick={handleAnnotate}
               >
                 Annotate
               </button>
