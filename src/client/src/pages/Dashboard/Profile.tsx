@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import CreateAnnotationModal from '../../components/modals/CreateAnnotationModal';
 import CreateFolderModal from '../../components/modals/CreateFolderModal';
+// To be implemented in the future
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import {
@@ -13,6 +15,7 @@ import {
   MdPeople,
   MdShare,
   MdFolder,
+  MdImportContacts,
 } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
 import { IoMdTrash } from 'react-icons/io';
@@ -177,12 +180,11 @@ const Title = styled.div`
   margin-top: 25px;
 `;
 
-const PlaceholderImg = styled.div`
-  background-color: rgb(72, 72, 72, 0.3);
+const ImgContainer = styled.div`
   width: 100px;
   height: 100px;
+  padding-top: 30px;
   margin: auto;
-  border-radius: 10px;
 `;
 
 const Profile = () => {
@@ -276,11 +278,13 @@ const Profile = () => {
                   </ShelfButton>
                 </Tooltip>
                 <Indicator>
-                  <MdFolder size={25} />
+                  <MdImportContacts size={25} />
                 </Indicator>
+
+                <ImgContainer>
+                  <MdFolder size={100} />
+                </ImgContainer>
                 <Title>{library.key}</Title>
-                <PlaceholderImg />
-                <Title>Author/Source</Title>
               </ShelfItemContainer>
             ))}
           </Bookshelf>
@@ -290,6 +294,8 @@ const Profile = () => {
         <CreateAnnotationModal
           show={showAnnotationModal}
           setShow={setShowAnnotationModal}
+          libraries={libraries}
+          setLibraries={setLibraries}
         />
       )}
       {showFolderModal && (
