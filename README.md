@@ -10,8 +10,8 @@ Your virtual nook for the new era of digital media 🤩📖
 #### Your digital bookshelf:
 ![bookshelf](docs/bookshelf.png "Your digital bookshelf")
 
-#### Share ad annotate your links
-![bookshelf](docs/highlight.png "Share ad annotate your links")
+#### Share and annotate your links
+![bookshelf](docs/highlight.png "Share and annotate your links")
 
 ### The problem
 Our information diets are incredibly fragmented- from articles we don't make time for, to viral tweetstorms, to our daily podcasts, blog posts, and more.
